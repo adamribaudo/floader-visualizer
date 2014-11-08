@@ -18,6 +18,8 @@ public class AbstractVisual  implements IVisual {
 	protected PeasyCam cam;
 	protected int camCounter = 0;
 	protected ColorScheme curColorScheme;
+	public float frustrumHeight;
+	public float frustrumWidth;
 	
 	@Override
 	public void setup(){

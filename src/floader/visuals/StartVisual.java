@@ -65,6 +65,7 @@ public class StartVisual extends PApplet {
 	boolean applyEdges = false;
 	boolean applyCube = false;
 	boolean applyBgCapture = false;
+	boolean applyTriple = false;
 	int blurSize = 10;
 	int maxBlurSize = 25;
 	float cubeRotate;
@@ -79,7 +80,7 @@ public class StartVisual extends PApplet {
 	Ani cameraDistanceAni;
 	float maxCameraDistance = 1200;// 2300;
 	float minCameraDistance = 200;
-	float curCameraDistance = maxCameraDistance;
+	float curCameraDistance = minCameraDistance;
 
 	float lightFallOffAmt = 0;
 	float dimAmt = 0;
@@ -150,12 +151,12 @@ public class StartVisual extends PApplet {
 
 		// Load the viz - complete
 		// viz = new RectangleArmyVisual(offlineApp);
-		// viz = new Percentages(offlineApp);
 		// viz = new SpinCycleVisual(offlineApp);
 		// viz = new HangOnVisual(offlineApp);
 		// viz = new Neveling(offlineApp);
-		// viz = new Density(offlineApp);
-		viz = new Battista(offlineApp);
+		 viz = new Density(offlineApp);
+		// viz = new Battista(offlineApp);
+		// viz =new PercentagesVisual(offlineApp);
 
 		// todo
 		// viz = new FlyingObjectsVisual(this);
@@ -206,6 +207,12 @@ public class StartVisual extends PApplet {
 				new PVector(scene.camera().at().x, scene.camera().at().y,
 						curCameraDistance));
 
+		float frustrumHeight = (float) (2.0f * curCameraDistance * Math.tan(PApplet.radians(scene.camera().fieldOfView() * 0.5f)));
+		
+		//83.3 was calculated by comparing actual height to the computed height to get a rough approximation
+		viz.frustrumHeight = frustrumHeight * 85.47008547008547f;
+		viz.frustrumWidth = viz.frustrumHeight * scene.camera().aspectRatio();
+		
 		// Set background image
 		if (bgImage != null)
 			image(bgImage, 0, 0);
@@ -220,6 +227,8 @@ public class StartVisual extends PApplet {
 		 */
 
 		offlineApp.g.beginDraw();
+		
+		
 
 		offlineApp.g.lightFalloff(1 - lightFallOffAmt, 0, 0);
 		offlineApp.g.ambientLight(150 - (dimAmt * 128), 150 - (dimAmt * 128),
@@ -232,12 +241,15 @@ public class StartVisual extends PApplet {
 
 		if (applyBackground)
 			offlineApp.g.background(0, 0);
+		
+		
 
 		scene.beginDraw();
+	
 
 		applyPerspective(offlineApp);
 
-		if (!applyBackground) {
+		/*if (!applyBackground) {
 			int rectOuterSize = 40;
 			int rectInnserSize = 30;
 			int numRects = 50;
@@ -250,7 +262,7 @@ public class StartVisual extends PApplet {
 					offlineApp.rect(i * rectOuterSize, k * rectOuterSize,
 							rectInnserSize, rectInnserSize);
 			offlineApp.popMatrix();
-		}
+		}*/
 
 		viz.draw(offlineApp.g);
 
@@ -260,7 +272,8 @@ public class StartVisual extends PApplet {
 		// Clipping
 		offlineApp.g.clip(0, 0, clipX, clipY);
 
-		// Applying the blur shader along the vertical direction
+		
+		/*// Applying the blur shader along the vertical direction
 		sepblur.set("horizontalPass", 0);
 		sepblur.set("blurSize", blurSize);
 		sepblur.set("sigma", 4f);
@@ -280,20 +293,32 @@ public class StartVisual extends PApplet {
 		pass2.beginDraw();
 		if (applyBackground)
 			pass2.background(0, 0);
-		pass2.shader(sepblur);
+		//pass2.shader(sepblur);
 
 		pass2.image(pass1, 0, 0);
-		pass2.endDraw();
-
+		pass2.endDraw();*/
+		
+		
+		if (applyTriple){
+			pushMatrix();
+			translate(VisualConstants.WIDTH/3, 0);
+			image(offlineApp.g, 0, 0);
+			popMatrix();
+			pushMatrix();
+			translate(-VisualConstants.WIDTH/3, 0);
+			image(offlineApp.g, 0, 0);
+			popMatrix();
+		}
+		
 		if (applyMirror) {
-			image(pass2, 0, 0);
+			image(offlineApp.g, 0, 0);
 			pushMatrix();
 			translate(VisualConstants.WIDTH, 0);
 			scale(-1f, 1f);
-			image(pass2, 0, 0);
+			image(offlineApp.g, 0, 0);
 			popMatrix();
 		} else {
-			image(pass2, 0, 0);
+			image(offlineApp.g, 0, 0);
 		}
 
 		if (applyEdges)
@@ -549,6 +574,11 @@ public class StartVisual extends PApplet {
 		case VisualConstants.GLOBAL_TRIGGER_CAPTUREBG:
 			if (amount > 0) {
 				applyBgCapture = true;
+			}
+			break;
+		case VisualConstants.GLOBAL_TRIGGER_TRIPLE:
+			if (amount > 0) {
+				applyTriple = !applyTriple;
 			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_EDGEDETECTION:

@@ -12,11 +12,9 @@ public class Battista extends AbstractVisual {
 	float y = 50;
 	int i = 0;
 	int j = 0;
-	int larghezza = 320;
-	int lunghezza = 60;
+	
 	int strokeWeight = 4;
 	int maxStrokeWeight = 8;
-	int vicini = 80;
 	int offset = 50;
 	float A;
 	float G;
@@ -29,56 +27,63 @@ public class Battista extends AbstractVisual {
 	}
 
 	public void setup() {
-		height = VisualConstants.HEIGHT + 400;
+		height = VisualConstants.HEIGHT;
 	}
 
 	public void draw(PGraphics g) {
-		g.translate((int)(-VisualConstants.WIDTH/3), (int)(-VisualConstants.HEIGHT/1.3));
+		//g.translate((int)(-VisualConstants.WIDTH/3), (int)(-VisualConstants.HEIGHT/1.3));
+		height = (int)this.frustrumHeight;
+		//larghezza = (int)this.frustrumWidth;
 		
-		
-
 		g.smooth();
 		g.stroke(curColorScheme.getColor(0).getRGB());
+		g.strokeWeight(strokeWeight);
+		
 
 		if (!animate) {
 			y = 50;
 			x = 20;
 		}
-
-		g.strokeWeight(strokeWeight);
-
-		for (int i = -50; i < lunghezza; i = i + (int) app.random(2, 3)) {
-			for (int j = 99 - i; j < larghezza; j = j + (int) app.random(1, 6)) {
-				x = j - (i / 3) + vicini;
-				if (y < 180 && x > (235 + 2)) {
-				} else {
-
-					g.point(x, y);
-					g.point(VisualConstants.WIDTH - x, height
-							- y);
-				}
-			}
-
-			// y = (y<=height ? y=y+(int)4/*random(2,28)*/+j+2 : 0);
-			// horizontal scale
-			y = (y <= height ? y = y + scale + j : 0);
-		}
 		
-		g.translate(-200,0);
+		int larghezza = (int) frustrumHeight/2;
+		int lunghezza = 70;
+		
+		drawDots(g, lunghezza, larghezza);
+		
+		lunghezza = 320;
+		larghezza = 90;
+		
+		g.pushMatrix();
+		g.translate(-frustrumWidth/3, 0);
+		drawDots(g, lunghezza, larghezza);
+		g.popMatrix();
+		
+		g.pushMatrix();
+		g.translate(frustrumWidth/3, 0);
+		drawDots(g, lunghezza, larghezza);
+		g.popMatrix();
+		
+		/*float boxWidth = 200;
+		g.strokeWeight(20);
+		g.point(0, 0);
+		g.point(this.frustrumWidth/2 - 10, 0);
+		g.point(-this.frustrumWidth/2 + 10, 0);
+		
+		g.stroke(255);
+		g.point(boxWidth, 0);
+		g.point(-boxWidth, 0);*/
+		
+	}
+	
+	void drawDots(PGraphics g, int lunghezza, int larghezza)
+	{
 		for (int i = -50; i < lunghezza; i = i + (int) app.random(2, 3)) {
 			for (int j = 99 - i; j < larghezza; j = j + (int) app.random(1, 6)) {
-				x = j - (i / 3) + vicini;
-				if (y < 180 && x > (235 + 2)) {
-				} else {
+				x = j - (i / 2);
 
-					g.point(x, y);
-					g.point(VisualConstants.WIDTH - x, height
-							- y);
-				}
+					g.point(x, y - height/2);
+					g.point(-x, y - height/2);
 			}
-
-			// y = (y<=height ? y=y+(int)4/*random(2,28)*/+j+2 : 0);
-			// horizontal scale
 			y = (y <= height ? y = y + scale + j : 0);
 		}
 	}
@@ -102,7 +107,6 @@ public void ctrlEvent(int index, float val) {
 				animate = false;
 			else animate = true;
 			break;
-		
 		
 		default:
 			System.err.println("Unrecognized effect " + index + " sent to Neveling ctrlEvent");

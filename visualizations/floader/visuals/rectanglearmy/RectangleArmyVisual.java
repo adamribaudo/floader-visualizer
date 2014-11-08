@@ -80,7 +80,7 @@ public class RectangleArmyVisual extends AbstractVisual {
 	float rotateCrazy = 0;
 	float maxRotateCrazy = 1;
 	float rotateY;
-	
+
 	float lightAmt;
 
 	PApplet app;
@@ -174,8 +174,6 @@ public class RectangleArmyVisual extends AbstractVisual {
 		avg = new Vec3D();
 		globalOffset = new Vec3D(0, 1.f / 3, 2.f / 3);
 
-	
-
 		reset();
 	}
 
@@ -191,7 +189,7 @@ public class RectangleArmyVisual extends AbstractVisual {
 		}
 
 		void resetPosition() {
-			position = new Vec3D(0,0,0);//Vec3D.randomVector();
+			position = new Vec3D(0, 0, 0);// Vec3D.randomVector();
 			position.scaleSelf(app.random(rebirthRadius));
 			if (particles.size() == 0)
 				position.addSelf(avg);
@@ -250,17 +248,16 @@ public class RectangleArmyVisual extends AbstractVisual {
 
 	public void draw(PGraphics g) {
 
-		g.noStroke();		
+		g.noStroke();
 		// creator = new HEC_Grid().setUSize(110).setVSize(110).setU(2).setV(2);
 		creator = new HEC_Cube().setRadius(10);
 		HE_Mesh rect = new HE_Mesh(creator);
 		rect.modify(new HEM_Noise().setDistance(noise));
-		
+
 		g.pushMatrix();
 		globalRotateDegrees = (globalRotateDegrees + globalRotateAmount) % 360;
 		g.rotateZ(PApplet.radians(globalRotateDegrees));
-		if(enableParticles)
-		{
+		if (enableParticles) {
 			avg = new Vec3D();
 			for (int i = 0; i < particles.size(); i++) {
 				Particle cur = ((Particle) particles.get(i));
@@ -270,25 +267,25 @@ public class RectangleArmyVisual extends AbstractVisual {
 		}
 
 		g.translate(-avg.x, -avg.y, -avg.z);
-		
+
 		for (int j = 0; j < numCols; j++) {
 			for (int k = 0; k < numRows; k++) {
-				cur = ((Particle) particles.get((j*numCols) + k));
+				cur = ((Particle) particles.get((j * numCols) + k));
 				if (enableParticles)
 					cur.update();
-				
+
 				g.fill(curColorScheme.getColor(k % curColorScheme.getLength())
-						.getRGB(), curColorScheme.getColor(k % curColorScheme.getLength())
-						.getAlpha());
+						.getRGB(),
+						curColorScheme.getColor(k % curColorScheme.getLength())
+								.getAlpha());
 
 				g.pushMatrix();
 				int padding = 120;
 				g.translate(j * padding - (numCols * padding / 2), k * padding
-						- (numRows * padding / 2) );
-				
-				
-				g.translate(cur.position.x,  cur.position.y, cur.position.z);
-				
+						- (numRows * padding / 2));
+
+				g.translate(cur.position.x, cur.position.y, cur.position.z);
+
 				individualRotateZDegrees = (individualRotateZDegrees + individualRotateZ) % 360;
 				g.rotateZ(PApplet.radians(-individualRotateZDegrees));
 
@@ -321,9 +318,7 @@ public class RectangleArmyVisual extends AbstractVisual {
 
 		globalOffset.addSelf(turbulence / neighborhood, turbulence
 				/ neighborhood, turbulence / neighborhood);
-		
-		
-		
+
 	}
 
 	public void reset() {
@@ -331,7 +326,7 @@ public class RectangleArmyVisual extends AbstractVisual {
 		particles = new Vector();
 		for (int i = 0; i < n; i++)
 			particles.add(new Particle());
-		
+
 		noise = 0;
 		individualRotateZ = 0;
 		individualRotateY = 0;
@@ -360,9 +355,12 @@ public class RectangleArmyVisual extends AbstractVisual {
 		if (index == VisualConstants.LOCAL_EFFECT_1) {
 			globalRotateAmount = val * maxGlobalRotateAmount;
 		} else if (index == VisualConstants.LOCAL_EFFECT_2) {
-			noise = maxNoise = val * MAXNOISE;
-		} else if(index == VisualConstants.LOCAL_EFFECT_3)
-		{
+			individualRotateZ = val * maxIndividualRotateZ;
+			
+		}
+		else if (index == VisualConstants.LOCAL_EFFECT_3) {
+			 noise = maxNoise = val * MAXNOISE;
+		} else if (index == VisualConstants.LOCAL_EFFECT_4) {
 			if (val > 0.1) {
 				independence = PApplet.map(val, 0, 1, 0, 5f);
 				turbulence = PApplet.map(val, 0, 1, 0, 4f);
@@ -379,12 +377,12 @@ public class RectangleArmyVisual extends AbstractVisual {
 				speed = speedDefault;
 				spread = spreadDefault;
 			}
-		} else if(index == VisualConstants.LOCAL_EFFECT_4)
-		{
-			if(val > 0.1)
+		} else if (index == VisualConstants.LOCAL_EFFECT_5) {
+			if (val > 0.1)
 				enableParticles = true;
-			else enableParticles = false;
-			
+			else
+				enableParticles = false;
+
 		}
 
 		// Explode - kind of annoying to work with

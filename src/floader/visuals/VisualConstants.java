@@ -9,7 +9,7 @@ public final class VisualConstants {
 	public static final boolean PROSCENE_GUIDES_ENABLED = false;
 	//public static final String MIDI_DEVICE = "5. Internal MIDI";
 	public static final String MIDI_DEVICE = "nanoKONTROL2";
-	public static final boolean NANOKONTROL2MIDI_ENABLED = true;
+	public static final boolean NANOKONTROL2MIDI_ENABLED = false;
 
 	public static final boolean ABLETON_OSC_NOTE_ENABLED = true;
 	public static final int ABLETON_OSC_NOTE_CHANNEL = 0;
@@ -54,6 +54,8 @@ public final class VisualConstants {
 	public static final int GLOBAL_TRIGGER_TOGGLEBGFILL = 11;
 	public static final int GLOBAL_TRIGGER_RESET = 12;
 	public static final int GLOBAL_TRIGGER_CYCLECOLORSCHEME = 17;
+	public static final int GLOBAL_TRIGGER_TRIPLE = 27;
+	
 	//Global Scenes
 	public static final int GLOBAL_SCENE_RECTANGLES = 13;
 	public static final int GLOBAL_SCENE_PERCENTAGES = 14;

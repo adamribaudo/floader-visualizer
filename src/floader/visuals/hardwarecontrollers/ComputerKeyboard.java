@@ -20,6 +20,8 @@ public class ComputerKeyboard {
 			return VisualConstants.GLOBAL_TRIGGER_TOGGLEBGFILL;
 		case 's':
 			return VisualConstants.GLOBAL_TRIGGER_CYCLECOLORSCHEME;
+		case 't':
+			return VisualConstants.GLOBAL_TRIGGER_TRIPLE;
 		case '1':
 			return VisualConstants.GLOBAL_SCENE_RECTANGLES;
 		case '2':

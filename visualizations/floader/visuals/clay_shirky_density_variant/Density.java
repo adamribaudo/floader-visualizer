@@ -47,7 +47,7 @@ public class Density extends AbstractVisual {
 	}
 
 	public void draw(PGraphics g) {
-		g.translate((int)(-VisualConstants.WIDTH/2.5), (int)(-VisualConstants.HEIGHT/2));
+		//g.translate((int)(-VisualConstants.WIDTH/2.5), (int)(-VisualConstants.HEIGHT/2));
 		g.noFill();
 		
 		g.strokeWeight(strokeWeight);

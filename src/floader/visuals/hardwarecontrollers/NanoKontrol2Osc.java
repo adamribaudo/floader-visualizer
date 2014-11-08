@@ -64,6 +64,12 @@ public class NanoKontrol2Osc  {
 			case KNOB_4_CTRL_NUM:
 				index = VisualConstants.LOCAL_EFFECT_4;
 				break;
+			case KNOB_5_CTRL_NUM:
+				index = VisualConstants.LOCAL_EFFECT_5;
+				break;
+			case KNOB_6_CTRL_NUM:
+				index = VisualConstants.GLOBAL_EFFECT_SCALE;
+				break;
 			case KNOB_7_CTRL_NUM:
 				index = VisualConstants.GLOBAL_EFFECT_LIGHTDIM;
 				break;
