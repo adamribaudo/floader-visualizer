@@ -53,11 +53,7 @@ public class StartVisual extends PApplet {
 	AbstractVisual viz;
 	OscP5 oscP5;
 	MidiBus midiBus;
-	// PShader blur;
-	PShader barrelblur;
-	PShader sepblur;
 	PShader edges;
-	PGraphics pass1, pass2;
 	PApplet offlineApp;
 	PImage bgImage;
 	Scene scene;
@@ -66,8 +62,6 @@ public class StartVisual extends PApplet {
 	boolean applyCube = false;
 	boolean applyBgCapture = false;
 	boolean applyTriple = false;
-	int blurSize = 10;
-	int maxBlurSize = 25;
 	float cubeRotate;
 
 	boolean applyMirror = false;
@@ -119,12 +113,6 @@ public class StartVisual extends PApplet {
 		offlineApp = new PApplet();
 		offlineApp.g = createGraphics(VisualConstants.WIDTH,
 				VisualConstants.HEIGHT, PApplet.OPENGL);
-		pass1 = createGraphics(VisualConstants.WIDTH, VisualConstants.HEIGHT,
-				OPENGL);
-		pass1.noSmooth();
-		pass2 = createGraphics(VisualConstants.WIDTH, VisualConstants.HEIGHT,
-				OPENGL);
-		pass2.noSmooth();
 
 		// Proscene
 		scene = new Scene(this, (PGraphics3D) offlineApp.g);
@@ -133,14 +121,6 @@ public class StartVisual extends PApplet {
 		scene.setAxisIsDrawn(VisualConstants.PROSCENE_GUIDES_ENABLED);
 		// scene.camera().setSceneRadius(maxCameraDistance);
 		// scene.camera().setFocusDistance(2000);
-
-		// Blur
-		sepblur = loadShader("sepblur.glsl");
-		sepblur.set("blurSize", 0);
-		sepblur.set("sigma", 4f);
-
-		// Barrel Blur
-		barrelblur = loadShader("barrelblur.glsl");
 
 		edges = loadShader("edges.glsl");
 
@@ -175,7 +155,6 @@ public class StartVisual extends PApplet {
 		perspectiveAni.pause();
 		cameraDistanceAni.pause();
 		background(0);
-		blurSize = 0;
 		applyBackground = true;
 		perspective = 0;
 		scene.camera().setPosition(new PVector(0, 0, maxCameraDistance));
@@ -272,31 +251,6 @@ public class StartVisual extends PApplet {
 		// Clipping
 		offlineApp.g.clip(0, 0, clipX, clipY);
 
-		
-		/*// Applying the blur shader along the vertical direction
-		sepblur.set("horizontalPass", 0);
-		sepblur.set("blurSize", blurSize);
-		sepblur.set("sigma", 4f);
-
-		pass1.beginDraw();
-		if (applyBackground)
-			pass1.background(0, 0);
-
-		pass1.shader(sepblur);
-		pass1.image(offlineApp.g, 0, 0);
-		pass1.endDraw();
-		// Applying the blur shader along the horizontal direction
-		sepblur.set("horizontalPass", 1);
-		sepblur.set("blurSize", blurSize);
-		sepblur.set("sigma", 4f);
-
-		pass2.beginDraw();
-		if (applyBackground)
-			pass2.background(0, 0);
-		//pass2.shader(sepblur);
-
-		pass2.image(pass1, 0, 0);
-		pass2.endDraw();*/
 		
 		
 		if (applyTriple){
@@ -534,7 +488,7 @@ public class StartVisual extends PApplet {
 	private void globalEffectChange(int index, float amount) {
 		switch (index) {
 		case VisualConstants.GLOBAL_EFFECT_BLUR:
-			blurSize = (int) (amount * maxBlurSize);
+			
 			break;
 		case VisualConstants.GLOBAL_EFFECT_CAMDISTANCE:
 			float pDistance = Math.abs(curCameraDistance - amount
