@@ -90,21 +90,19 @@ public class ShapeDanceVisual extends AbstractVisual {
 				g.pushMatrix();
 				g.translate(xDir * (rectWidth + rectPadding) * c, 0);
 				// Draw First rect
-				g.fill(curColorScheme.getColor(0).getRGB());
 				g.pushMatrix();
 				g.translate(xOffsetDir * xOffset, yOffsetDir * yOffset);
-				drawPyramid();
+				drawPyramid(curColorScheme.getColor(0).getRGB(), curColorScheme.getColor(0).getRGB() );
 				g.popMatrix();
 				g.pushMatrix();
-				// Draw Second rect
+				// Draw second object
 				g.translate(-(rectWidth + rectPadding) / 2,
 						-(rectHeight + rectPadding) / 2);
 
 				g.scale(rectScale);
-				g.fill(curColorScheme.getColor(1).getRGB());
 				// always draw these under the other rects
 				g.translate(0, 0, -1);
-				drawPyramid();
+				drawPyramid(curColorScheme.getColor(1).getRGB(), curColorScheme.getColor(1).getRGB());
 				g.popMatrix();
 
 				g.popMatrix();
@@ -113,37 +111,47 @@ public class ShapeDanceVisual extends AbstractVisual {
 		}
 	}
 
-	void drawBox() {
+	/*void drawBox() {
 		g.pushMatrix();
 		g.rotateZ(PApplet.radians(curRotate));
 		g.box(rectWidth, rectHeight, rectWidth);
 		g.popMatrix();
-	}
-	
-	void drawPyramid() {
+	}*/
+
+	void drawPyramid(int color1, int color2) {
 		g.pushMatrix();
 		g.rotateZ(PApplet.radians(curRotate));
-		drawPyramid(rectWidth/2, rectHeight);
+		drawPyramid(rectWidth / 2, rectHeight, color1, color2);
 		g.popMatrix();
 	}
 
-	void drawPyramid(float t, float t2) {
+	void drawPyramid(float t, float t2, int color1, int color2) {
 		g.beginShape(PApplet.TRIANGLES);
+
+		
+		g.fill(color1);
+		
 		g.vertex(-t, -t, -t);
 		g.vertex(t, -t, -t);
+
 		g.vertex(0, 0, t2);
 
+		g.fill(color1);
 		g.vertex(t, -t, -t);
 		g.vertex(t, t, -t);
+
 		g.vertex(0, 0, t2);
 
-		g.fill(0);
+		g.fill(color1);
 		g.vertex(t, t, -t);
 		g.vertex(-t, t, -t);
+
 		g.vertex(0, 0, t2);
 
+		g.fill(color1);
 		g.vertex(-t, t, -t);
 		g.vertex(-t, -t, -t);
+
 		g.vertex(0, 0, t2);
 
 		g.endShape();

@@ -45,7 +45,7 @@ public class StartVisual extends PApplet {
 	int ctrl2;
 	int clipX;
 	int clipY;
-	
+
 	boolean changeScene = false;
 	int changeSceneIndex = -1;
 
@@ -127,19 +127,20 @@ public class StartVisual extends PApplet {
 
 		oscP5 = new OscP5(this, OSC_PORT);
 
-		if(VisualConstants.NANOKONTROL2MIDI_ENABLED || VisualConstants.MONOMEMIDI_ENABLED)
+		if (VisualConstants.NANOKONTROL2MIDI_ENABLED
+				|| VisualConstants.MONOMEMIDI_ENABLED)
 			midiBus = new MidiBus(this, VisualConstants.MIDI_DEVICE, "");
-		
+
 		// Load the viz - complete
 		// viz = new RectangleArmyVisual(offlineApp);
 		// viz = new SpinCycleVisual(offlineApp);
 		// viz = new HangOnVisual(offlineApp);
 		// viz = new Neveling(offlineApp);
-		//viz = new Density(offlineApp);
+		// viz = new Density(offlineApp);
 		// viz = new Battista(offlineApp);
 		// viz =new PercentagesVisual(offlineApp);
 		viz = new ShapeDanceVisual(offlineApp);
-		
+
 		// todo
 		// viz = new FlyingObjectsVisual(this);
 		// viz = new LeakierPhysicsVisual(this); //Doesn't seem to work
@@ -169,12 +170,11 @@ public class StartVisual extends PApplet {
 	}
 
 	public void draw() {
-		if(changeScene)
-		{
+		if (changeScene) {
 			changeScene(changeSceneIndex);
 			changeScene = false;
 		}
-		
+
 		if (applyReset) {
 			reset();
 			viz.reset();
@@ -188,12 +188,14 @@ public class StartVisual extends PApplet {
 				new PVector(scene.camera().at().x, scene.camera().at().y,
 						curCameraDistance));
 
-		float frustrumHeight = (float) (2.0f * curCameraDistance * Math.tan(PApplet.radians(scene.camera().fieldOfView() * 0.5f)));
-		
-		//83.3 was calculated by comparing actual height to the computed height to get a rough approximation
+		float frustrumHeight = (float) (2.0f * curCameraDistance * Math
+				.tan(PApplet.radians(scene.camera().fieldOfView() * 0.5f)));
+
+		// 83.3 was calculated by comparing actual height to the computed height
+		// to get a rough approximation
 		viz.frustrumHeight = frustrumHeight * 85.47008547008547f;
 		viz.frustrumWidth = viz.frustrumHeight * scene.camera().aspectRatio();
-		
+
 		// Set background image
 		if (bgImage != null)
 			image(bgImage, 0, 0);
@@ -208,8 +210,6 @@ public class StartVisual extends PApplet {
 		 */
 
 		offlineApp.g.beginDraw();
-		
-		
 
 		offlineApp.g.lightFalloff(1 - lightFallOffAmt, 0, 0);
 		offlineApp.g.ambientLight(150 - (dimAmt * 128), 150 - (dimAmt * 128),
@@ -222,28 +222,20 @@ public class StartVisual extends PApplet {
 
 		if (applyBackground)
 			offlineApp.g.background(0, 0);
-		
-		
 
 		scene.beginDraw();
-	
 
 		applyPerspective(offlineApp);
 
-		/*if (!applyBackground) {
-			int rectOuterSize = 40;
-			int rectInnserSize = 30;
-			int numRects = 50;
-			offlineApp.pushMatrix();
-			offlineApp.fill(0);
-			offlineApp.translate(-(rectOuterSize * numRects) / 2,
-					-(rectOuterSize * numRects) / 2);
-			for (int i = 0; i < numRects; i++)
-				for (int k = 0; k < numRects; k++)
-					offlineApp.rect(i * rectOuterSize, k * rectOuterSize,
-							rectInnserSize, rectInnserSize);
-			offlineApp.popMatrix();
-		}*/
+		/*
+		 * if (!applyBackground) { int rectOuterSize = 40; int rectInnserSize =
+		 * 30; int numRects = 50; offlineApp.pushMatrix(); offlineApp.fill(0);
+		 * offlineApp.translate(-(rectOuterSize * numRects) / 2, -(rectOuterSize
+		 * * numRects) / 2); for (int i = 0; i < numRects; i++) for (int k = 0;
+		 * k < numRects; k++) offlineApp.rect(i * rectOuterSize, k *
+		 * rectOuterSize, rectInnserSize, rectInnserSize);
+		 * offlineApp.popMatrix(); }
+		 */
 
 		viz.draw(offlineApp.g);
 
@@ -253,19 +245,17 @@ public class StartVisual extends PApplet {
 		// Clipping
 		offlineApp.g.clip(0, 0, clipX, clipY);
 
-		
-		
-		if (applyTriple){
+		if (applyTriple) {
 			pushMatrix();
-			translate(VisualConstants.WIDTH/3, 0);
+			translate(VisualConstants.WIDTH / 3, 0);
 			image(offlineApp.g, 0, 0);
 			popMatrix();
 			pushMatrix();
-			translate(-VisualConstants.WIDTH/3, 0);
+			translate(-VisualConstants.WIDTH / 3, 0);
 			image(offlineApp.g, 0, 0);
 			popMatrix();
 		}
-		
+
 		if (applyMirror) {
 			image(offlineApp.g, 0, 0);
 			pushMatrix();
@@ -390,7 +380,6 @@ public class StartVisual extends PApplet {
 		PApplet.main("floader.visuals.StartVisual", args);
 	}
 
-
 	public void noteOn(int chan, int note, int vel) {
 		if (midiReady) {
 			// System.out.println("Channel: " + chan + ", Note: " + note
@@ -422,7 +411,6 @@ public class StartVisual extends PApplet {
 			}
 		}
 	}
-
 
 	public void controllerChange(int chan, int num, int val) {
 		// Some junk MIDI is being spewed out every time the port is opened by
@@ -459,7 +447,7 @@ public class StartVisual extends PApplet {
 	private void globalEffectChange(int index, float amount) {
 		switch (index) {
 		case VisualConstants.GLOBAL_EFFECT_BLUR:
-			
+
 			break;
 		case VisualConstants.GLOBAL_EFFECT_CAMDISTANCE:
 			float pDistance = Math.abs(curCameraDistance - amount
@@ -534,56 +522,62 @@ public class StartVisual extends PApplet {
 			break;
 		case VisualConstants.GLOBAL_SCENE_RECTANGLES:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_RECTANGLES;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_PERCENTAGES:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_PERCENTAGES;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_SPINCYCLE:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_SPINCYCLE;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_FLYINGOBJECTS:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_FLYINGOBJECTS;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_KINECT:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_KINECT;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_HANGON:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_HANGON;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_NEVELING:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_NEVELING;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_DENSITY:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_DENSITY;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_BATTISTA:
 			if (amount > 0) {
-				changeScene=true;
+				changeScene = true;
 				changeSceneIndex = VisualConstants.GLOBAL_SCENE_BATTISTA;
+			}
+			break;
+		case VisualConstants.GLOBAL_SCENE_SHAPEDANCE:
+			if (amount > 0) {
+				changeScene = true;
+				changeSceneIndex = VisualConstants.GLOBAL_SCENE_SHAPEDANCE;
 			}
 			break;
 		case VisualConstants.GLOBAL_EFFECT_CLIPX:
@@ -616,38 +610,33 @@ public class StartVisual extends PApplet {
 	void oscEvent(OscMessage msg) {
 		int effect = -1;
 		float value = 0;
-		
+
 		if (msg.checkAddrPattern("/mtn/ctrl")
-				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_NANOKONTROL_CHANNEL)
-		{
+				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_NANOKONTROL_CHANNEL) {
 			effect = NanoKontrol2Osc.convertInputToIndex(msg);
 			value = PApplet.map(msg.get(VisualConstants.OSC_VALUE_INDEX)
 					.intValue(), 0, 127, 0, 1);
-		}
-		else if (msg.checkAddrPattern("/mtn/ctrl")
-				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_CTRL_CHANNEL)
-		{
-			
+		} else if (msg.checkAddrPattern("/mtn/ctrl")
+				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_CTRL_CHANNEL) {
+
 			effect = AbletonOscCtrlClip.convertInputToIndex(msg);
 			value = PApplet.map(msg.get(VisualConstants.OSC_VALUE_INDEX)
 					.intValue(), 0, 127, 0, 1);
-		}
-		else if (msg.checkAddrPattern("/mtn/note")
-				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_NOTE_CHANNEL)
-		{
+		} else if (msg.checkAddrPattern("/mtn/note")
+				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_NOTE_CHANNEL) {
 			effect = AbletonOscNoteClip.convertInputToIndex(msg);
-			//TODO not sure why the VEL index is different for notes
+			// TODO not sure why the VEL index is different for notes
 			value = PApplet.map(msg.get(VisualConstants.OSC_VEL_INDEX)
 					.intValue(), 0, 127, 0, 1);
 		}
-		
+
 		if (effect != -1) {
-			
+
 			if (VisualConstants.isGlobalEffect(effect))
 				globalEffectChange(effect, value);
 			else
 				vizEffectChange(effect, value);
-		} else if(effect == -1)
+		} else if (effect == -1)
 			System.err
 					.println("Error converting OSC event in oscEvent(OscMessage msg)");
 
@@ -656,55 +645,55 @@ public class StartVisual extends PApplet {
 	void changeScene(int scene) {
 		switch (scene) {
 		case VisualConstants.GLOBAL_SCENE_RECTANGLES:
-				viz = new RectangleArmyVisual(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new RectangleArmyVisual(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_PERCENTAGES:
-				viz = new PercentagesVisual(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new PercentagesVisual(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_SPINCYCLE:
-				viz = new SpinCycleVisual(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new SpinCycleVisual(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_FLYINGOBJECTS:
-				viz = new FlyingObjectsVisual(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new FlyingObjectsVisual(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_KINECT:
-				viz = new KinectVisual(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new KinectVisual(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_HANGON:
-				viz = new HangOnVisual(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new HangOnVisual(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_NEVELING:
-				viz = new Neveling(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new Neveling(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_DENSITY:
-				viz = new Density(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new Density(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_BATTISTA:
-				viz = new Battista(offlineApp);
-				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
-				viz.setup();
+			viz = new Battista(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_SHAPEDANCE:
 			viz = new ShapeDanceVisual(offlineApp);
 			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
 			viz.setup();
-		break;
+			break;
 		}
 	}
 }
