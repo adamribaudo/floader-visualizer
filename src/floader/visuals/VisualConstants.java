@@ -20,7 +20,7 @@ public final class VisualConstants {
 	public static final boolean ABLETON_OSC_NANOKONTROL_ENABLED = true;
 	public static final int ABLETON_OSC_NANOKONTROL_CHANNEL = 2;
 	
-	public static final boolean MONOMEMIDI_ENABLED = true;
+	public static final boolean MONOMEMIDI_ENABLED = false;
 	public static final boolean COMPUTERKEYBOARD_ENABLED = true;
 	
 	public static final int OSC_CTRL_INDEX = 1;
@@ -66,6 +66,7 @@ public final class VisualConstants {
 	public static final int GLOBAL_SCENE_NEVELING = 24;
 	public static final int GLOBAL_SCENE_DENSITY = 25;
 	public static final int GLOBAL_SCENE_BATTISTA = 26;
+	public static final int GLOBAL_SCENE_SHAPEDANCE = 28;
 	//Local Effects
 	public static final int LOCAL_EFFECT_1 = 100;
 	public static final int LOCAL_EFFECT_2 = 101;

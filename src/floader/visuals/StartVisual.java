@@ -23,6 +23,7 @@ import floader.visuals.neveling_untitled_2.Neveling;
 import floader.visuals.particles.*;
 import floader.visuals.percentages.PercentagesVisual;
 import floader.visuals.rectanglearmy.RectangleArmyVisual;
+import floader.visuals.shapedance.ShapeDanceVisual;
 import floader.visuals.spincycle.SpinCycleVisual;
 import floader.visuals.turingfractal.TuringFractalVisual;
 import oscP5.OscMessage;
@@ -126,18 +127,19 @@ public class StartVisual extends PApplet {
 
 		oscP5 = new OscP5(this, OSC_PORT);
 
-		midiBus = new MidiBus(this, VisualConstants.MIDI_DEVICE, "");
-		// MidiBus.list();
-
+		if(VisualConstants.NANOKONTROL2MIDI_ENABLED || VisualConstants.MONOMEMIDI_ENABLED)
+			midiBus = new MidiBus(this, VisualConstants.MIDI_DEVICE, "");
+		
 		// Load the viz - complete
 		// viz = new RectangleArmyVisual(offlineApp);
 		// viz = new SpinCycleVisual(offlineApp);
 		// viz = new HangOnVisual(offlineApp);
 		// viz = new Neveling(offlineApp);
-		 viz = new Density(offlineApp);
+		//viz = new Density(offlineApp);
 		// viz = new Battista(offlineApp);
 		// viz =new PercentagesVisual(offlineApp);
-
+		viz = new ShapeDanceVisual(offlineApp);
+		
 		// todo
 		// viz = new FlyingObjectsVisual(this);
 		// viz = new LeakierPhysicsVisual(this); //Doesn't seem to work
@@ -388,19 +390,6 @@ public class StartVisual extends PApplet {
 		PApplet.main("floader.visuals.StartVisual", args);
 	}
 
-	/*
-	 * public void oscEvent(OscMessage msg) { if
-	 * (msg.checkAddrPattern(VisualConstants.OSC_CTRL_PATH)) {
-	 * viz.ctrlEvent(msg.get(0).intValue(), msg.get(1).intValue(), msg
-	 * .get(2).intValue()); } else if
-	 * (msg.checkAddrPattern(VisualConstants.OSC_NOTE_PATH)) { if
-	 * (msg.get(2).intValue() == VisualConstants.OBJECT_EVENT_CHANNEL) { //
-	 * Check if the vel of the incoming note > 0 if (msg.get(1).intValue() > 0)
-	 * viz.noteObjEvent(msg.get(0).intValue(), msg.get(1) .intValue()); } else
-	 * if (msg.get(2).intValue() == VisualConstants.CAM_EVENT_CHANNEL) { //
-	 * Check if the vel of the incoming note > 0 if (msg.get(1).intValue() > 0)
-	 * viz.camEvent(msg.get(0).intValue()); } } }
-	 */
 
 	public void noteOn(int chan, int note, int vel) {
 		if (midiReady) {
@@ -434,24 +423,6 @@ public class StartVisual extends PApplet {
 		}
 	}
 
-	// TODO create hardware class for this
-	/*
-	 * // Translate the incoming pitch value from the hardware to a range of 0-9
-	 * private int hardwareNoteToVisPitch(int pitch) { int convertedPitch = 0;
-	 * switch (pitch) { case VisualConstants.NOTE_1: convertedPitch = 0; break;
-	 * case VisualConstants.NOTE_2: convertedPitch = 1; break; case
-	 * VisualConstants.NOTE_3: convertedPitch = 2; break; case
-	 * VisualConstants.NOTE_4: convertedPitch = 3; break; case
-	 * VisualConstants.NOTE_5: convertedPitch = 4; break; case
-	 * VisualConstants.NOTE_6: convertedPitch = 5; break; case
-	 * VisualConstants.NOTE_7: convertedPitch = 6; break; case
-	 * VisualConstants.NOTE_8: convertedPitch = 7; break; case
-	 * VisualConstants.NOTE_9: convertedPitch = 8; break; case
-	 * VisualConstants.NOTE_10: convertedPitch = 9; break; default:
-	 * System.err.println("Error: unidentified pitch: " + pitch +
-	 * " sent to funtion: hardwarePitchToVisPitch"); break; } return
-	 * convertedPitch; }
-	 */
 
 	public void controllerChange(int chan, int num, int val) {
 		// Some junk MIDI is being spewed out every time the port is opened by
@@ -644,25 +615,39 @@ public class StartVisual extends PApplet {
 
 	void oscEvent(OscMessage msg) {
 		int effect = -1;
+		float value = 0;
 		
 		if (msg.checkAddrPattern("/mtn/ctrl")
 				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_NANOKONTROL_CHANNEL)
+		{
 			effect = NanoKontrol2Osc.convertInputToIndex(msg);
+			value = PApplet.map(msg.get(VisualConstants.OSC_VALUE_INDEX)
+					.intValue(), 0, 127, 0, 1);
+		}
 		else if (msg.checkAddrPattern("/mtn/ctrl")
 				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_CTRL_CHANNEL)
+		{
+			
 			effect = AbletonOscCtrlClip.convertInputToIndex(msg);
+			value = PApplet.map(msg.get(VisualConstants.OSC_VALUE_INDEX)
+					.intValue(), 0, 127, 0, 1);
+		}
 		else if (msg.checkAddrPattern("/mtn/note")
 				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_NOTE_CHANNEL)
+		{
 			effect = AbletonOscNoteClip.convertInputToIndex(msg);
-
-		if (effect != -1) {
-			float value = PApplet.map(msg.get(VisualConstants.OSC_VALUE_INDEX)
+			//TODO not sure why the VEL index is different for notes
+			value = PApplet.map(msg.get(VisualConstants.OSC_VEL_INDEX)
 					.intValue(), 0, 127, 0, 1);
+		}
+		
+		if (effect != -1) {
+			
 			if (VisualConstants.isGlobalEffect(effect))
 				globalEffectChange(effect, value);
 			else
 				vizEffectChange(effect, value);
-		} else
+		} else if(effect == -1)
 			System.err
 					.println("Error converting OSC event in oscEvent(OscMessage msg)");
 
@@ -715,6 +700,11 @@ public class StartVisual extends PApplet {
 				viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
 				viz.setup();
 			break;
+		case VisualConstants.GLOBAL_SCENE_SHAPEDANCE:
+			viz = new ShapeDanceVisual(offlineApp);
+			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
+			viz.setup();
+		break;
 		}
 	}
 }

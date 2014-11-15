@@ -38,6 +38,8 @@ public class ComputerKeyboard {
 			return VisualConstants.GLOBAL_SCENE_DENSITY;
 		case '8':
 			return VisualConstants.GLOBAL_SCENE_BATTISTA;
+		case '9':
+			return VisualConstants.GLOBAL_SCENE_SHAPEDANCE;
 		//Escape key
 		case 27:
 			return -1;

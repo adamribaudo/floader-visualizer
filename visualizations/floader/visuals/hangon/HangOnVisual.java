@@ -209,7 +209,7 @@ public class HangOnVisual extends AbstractVisual {
 				multiplier = (val * 8.0f) - 4.0f;
 				break;
 			case VisualConstants.LOCAL_EFFECT_2:
-				noise = (int)(val * maxNoise);
+				//noise = (int)(val * maxNoise);
 				break;
 			case VisualConstants.LOCAL_EFFECT_3:
 				for (int i = 0; i < numSpheres; i++) {
