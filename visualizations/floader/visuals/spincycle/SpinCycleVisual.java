@@ -90,6 +90,7 @@ public class SpinCycleVisual extends AbstractVisual implements IVisual {
 	@Override
 	public void setup() {
 		super.setup();
+		Ani.setDefaultEasing(Ani.LINEAR);
 		
 		meshRenderer = new WB_Render(app);
 		meshes = new HE_Mesh[numMeshes];
@@ -98,6 +99,8 @@ public class SpinCycleVisual extends AbstractVisual implements IVisual {
 		rotateAni.repeat();
 		rotateAni.start();*/
 		zoomAni = new Ani(this, origZoomDuration, "zoomAmt", (cylHeight - 12000) / 2);
+		zoomAni.setDefaultEasing(Ani.LINEAR);
+		zoomAni.setPlayMode(Ani.FORWARD);
 		zoomAni.repeat();
 		zoomAni.start();
 	}

@@ -7,8 +7,8 @@ public final class VisualConstants {
 	public static final String OSC_CTRL_PATH = "/mtn/ctrl";
 	public static final String OSC_NOTE_PATH = "/mtn/note";
 	public static final boolean PROSCENE_GUIDES_ENABLED = false;
-	//public static final String MIDI_DEVICE = "5. Internal MIDI";
-	public static final String MIDI_DEVICE = "nanoKONTROL2";
+	public static final String MIDI_DEVICE = "5. Internal MIDI";
+	//public static final String MIDI_DEVICE = "nanoKONTROL2";
 	public static final boolean NANOKONTROL2MIDI_ENABLED = false;
 
 	public static final boolean ABLETON_OSC_NOTE_ENABLED = true;
@@ -20,7 +20,7 @@ public final class VisualConstants {
 	public static final boolean ABLETON_OSC_NANOKONTROL_ENABLED = true;
 	public static final int ABLETON_OSC_NANOKONTROL_CHANNEL = 2;
 	
-	public static final boolean MONOMEMIDI_ENABLED = false;
+	public static final boolean MONOMEMIDI_ENABLED = true;
 	public static final boolean COMPUTERKEYBOARD_ENABLED = true;
 	
 	public static final int OSC_CTRL_INDEX = 1;
@@ -29,7 +29,7 @@ public final class VisualConstants {
 	public static final int OSC_VALUE_INDEX = 0;
 	public static final int OSC_CHANNEL_INDEX = 2;
 	
-	public static final int WIDTH = 2400;
+	public static final int WIDTH = 1900;
 	public static final int HEIGHT = 600;
 	public static final boolean FULLSCREEN = false;
 	

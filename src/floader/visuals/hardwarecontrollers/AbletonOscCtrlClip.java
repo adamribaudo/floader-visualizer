@@ -28,6 +28,9 @@ public class AbletonOscCtrlClip  {
 			case 5:
 				index = VisualConstants.LOCAL_EFFECT_5;
 				break;
+			case 6:
+				index = VisualConstants.LOCAL_EFFECT_6;
+				break;
 			case 10:
 				index = VisualConstants.GLOBAL_EFFECT_CLIPX;
 				break;

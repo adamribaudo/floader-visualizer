@@ -23,7 +23,7 @@ public class HangOnVisual extends AbstractVisual {
 	WB_Render meshRenderer;
 	HE_Mesh[] spheres;
 	int[] sphereColors;
-	
+
 	int noise;
 	int maxNoise = 3;
 
@@ -51,9 +51,8 @@ public class HangOnVisual extends AbstractVisual {
 	boolean animateColors = false;
 	int colorOffset = 0;
 
-	
 	boolean changeColors = false;
-	
+
 	PApplet app;
 
 	public HangOnVisual(PApplet app) {
@@ -83,18 +82,27 @@ public class HangOnVisual extends AbstractVisual {
 		sphereCount = 0;
 		for (int i = 0; i < numSpheres; i++) {
 			// Create
-			creator = new HEC_Sphere().setRadius(startingRadius + sphereCount * radiusIncrement).setUFacets(7).setVFacets(7);
+			creator = new HEC_Sphere()
+					.setRadius(startingRadius + sphereCount * radiusIncrement)
+					.setUFacets(7).setVFacets(7);
 			spheres[i] = new HE_Mesh(creator);
 
 			// Lattice & Cap
 			if (i > 0) {
-				// TODO figure out way to incorporate lattice in a performant way
-				spheres[i].modify(new HEM_Lattice().setDepth(1).setWidth(5).setThresholdAngle(PApplet.radians(90)).setFuse(true));
-				spheres[i].modify(new HEM_Slice().setCap(true).setPlane(new WB_Plane(new WB_Point3d(0, -25, 0), new WB_Vector3d(0, 1, 0))));
-				spheres[i].modify(new HEM_Slice().setCap(true).setPlane(new WB_Plane(new WB_Point3d(0, 25, 0), new WB_Vector3d(0, -1, 0))));
+				// TODO figure out way to incorporate lattice in a performant
+				// way
+				spheres[i].modify(new HEM_Lattice().setDepth(1).setWidth(5)
+						.setThresholdAngle(PApplet.radians(90)).setFuse(true));
+				spheres[i].modify(new HEM_Slice().setCap(true).setPlane(
+						new WB_Plane(new WB_Point3d(0, -25, 0),
+								new WB_Vector3d(0, 1, 0))));
+				spheres[i].modify(new HEM_Slice().setCap(true).setPlane(
+						new WB_Plane(new WB_Point3d(0, 25, 0), new WB_Vector3d(
+								0, -1, 0))));
 			}
-			
-			sphereColors[i] = app.color(i * 5 + 10, i * 4 + app.random(20), 40 + app.random(40), 255);
+
+			sphereColors[i] = app.color(i * 5 + 10, i * 4 + app.random(20),
+					40 + app.random(40), 255);
 			sphereCount++;
 		}
 
@@ -102,7 +110,7 @@ public class HangOnVisual extends AbstractVisual {
 
 	@Override
 	public void draw(PGraphics g) {
-				
+
 		for (int i = 0; i < numSpheres; i++) {
 			g.pushMatrix();
 			g.noStroke();
@@ -114,30 +122,31 @@ public class HangOnVisual extends AbstractVisual {
 				zSpins[i] += zRates[i] * multiplier;
 				ySpins[i] += yRates[i] * multiplier;
 				xSpins[i] += xRates[i] * multiplier;
-				g.fill(curColorScheme.getColor((i + colorOffset) % curColorScheme.getLength())
-						.getRGB(), curColorScheme.getColor(i % curColorScheme.getLength())
-						.getAlpha());
+				g.fill(curColorScheme.getColor(
+						(i + colorOffset) % curColorScheme.getLength())
+						.getRGB(),
+						curColorScheme.getColor(i % curColorScheme.getLength())
+								.getAlpha());
 				g.rotateZ(PApplet.radians(zSpins[i]));
 				g.rotateY(PApplet.radians(ySpins[i]));
 				g.rotateX(PApplet.radians(xSpins[i]));
-				
-				if(noise>0)spheres[i].modify(new HEM_Noise().setDistance(noise));
+
+				if (noise > 0)
+					spheres[i].modify(new HEM_Noise().setDistance(noise));
 				drawSphere(i);
 			}
 
 			g.popMatrix();
 		}
 
-		/*if (animateColors) {
-			int tempColor = sphereColors[numSpheres - 1];
-			for (int i = numSpheres - 1; i > 0; i--) {
-				sphereColors[i] = sphereColors[i - 1];
-
-				if (changeColors)
-					sphereColors[i] = sphereColors[i] + 1;
-			}
-			sphereColors[0] = tempColor;
-		}*/
+		/*
+		 * if (animateColors) { int tempColor = sphereColors[numSpheres - 1];
+		 * for (int i = numSpheres - 1; i > 0; i--) { sphereColors[i] =
+		 * sphereColors[i - 1];
+		 * 
+		 * if (changeColors) sphereColors[i] = sphereColors[i] + 1; }
+		 * sphereColors[0] = tempColor; }
+		 */
 	}
 
 	void drawSphere(int sphereNum) {
@@ -182,7 +191,7 @@ public class HangOnVisual extends AbstractVisual {
 	}
 
 	public void noteObjEvent(int note, float velocity) {
-		//System.out.println(msg.get(0).intValue());
+		// System.out.println(msg.get(0).intValue());
 		if (note == 1 && velocity > 1) {
 			initSpinRates();
 		} else if (note == 0 && velocity > 1) {
@@ -194,38 +203,40 @@ public class HangOnVisual extends AbstractVisual {
 		} else if (note == 75 && velocity > 1) {
 			changeColors = true;
 		} else if (note == 76 && velocity > 1) {
-			//Stop animation
+			// Stop animation
 			multiplier = 0;
 		}
 
 	}
 
 	public void ctrlEvent(int index, float val) {
-		
-			switch(index)
-			{
-			case VisualConstants.LOCAL_EFFECT_1:
-				// spin rate
-				multiplier = (val * 8.0f) - 4.0f;
-				break;
-			case VisualConstants.LOCAL_EFFECT_2:
-				//noise = (int)(val * maxNoise);
-				break;
-			case VisualConstants.LOCAL_EFFECT_3:
+
+		switch (index) {
+		case VisualConstants.LOCAL_EFFECT_1:
+			// spin rate
+			multiplier = (val * 8.0f) - 4.0f;
+			break;
+		case VisualConstants.LOCAL_EFFECT_2:
+			// noise = (int)(val * maxNoise);
+			break;
+		case VisualConstants.LOCAL_EFFECT_3:
+			if (val > 0) {
 				for (int i = 0; i < numSpheres; i++) {
 					ySpins[i] = 0;
 					zSpins[i] = 0;
 					xSpins[i] = 0;
 				}
 				initSpinRates();
-				break;
-			case VisualConstants.LOCAL_EFFECT_4:
-	
-				break;
-			default:
-				System.err.println("Unrecognized effect " + index + " sent to HangOnVisuals ctrlEvent");
-				break;
 			}
+			break;
+		case VisualConstants.LOCAL_EFFECT_4:
+
+			break;
+		default:
+			System.err.println("Unrecognized effect " + index
+					+ " sent to HangOnVisuals ctrlEvent");
+			break;
+		}
 	}
 
 }

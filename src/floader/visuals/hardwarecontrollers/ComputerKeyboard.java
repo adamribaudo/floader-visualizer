@@ -3,9 +3,14 @@ package floader.visuals.hardwarecontrollers;
 import floader.visuals.VisualConstants;
 
 public class ComputerKeyboard {
-	public static int convertKeyPress(int key)
-	{
-		switch(key){
+	public static boolean edgeToggle = false;
+	public static boolean tripleToggle = false;
+	public static boolean bgFillToggle = true;
+	public static boolean mirrorToggle = false;
+	
+
+	public static int convertKeyPress(int key) {
+		switch (key) {
 		case 'x':
 			return VisualConstants.GLOBAL_TRIGGER_CUBE;
 		case 'r':
@@ -40,12 +45,60 @@ public class ComputerKeyboard {
 			return VisualConstants.GLOBAL_SCENE_BATTISTA;
 		case '9':
 			return VisualConstants.GLOBAL_SCENE_SHAPEDANCE;
-		//Escape key
+			// Escape key
 		case 27:
 			return -1;
 		}
-		
-		System.err.println("Unidentified key press in ComputerKeyboard class, convertKeyPress function, key: " + key);
+
+		System.err
+				.println("Unidentified key press in ComputerKeyboard class, convertKeyPress function, key: "
+						+ key);
 		return -1;
 	}
+
+	public static float convertKeyPressToValue(int effect) {
+		switch (effect) {
+		case VisualConstants.GLOBAL_TRIGGER_EDGEDETECTION:
+			if (edgeToggle)
+				return 1;
+			else
+				return .4f;
+		case VisualConstants.GLOBAL_TRIGGER_TRIPLE:
+			if (tripleToggle)
+				return 1;
+			else
+				return .4f;
+		case VisualConstants.GLOBAL_TRIGGER_TOGGLEBGFILL:
+			if (bgFillToggle)
+				return 1;
+			else
+				return .4f;
+		case VisualConstants.GLOBAL_TRIGGER_MIRROR:
+			if (mirrorToggle)
+				return 1;
+			else
+				return .4f;
+		}
+
+		return 1;
+
+	}
+
+	public static void captureToggle(int key) {
+		switch (key) {
+		case 'e':
+			edgeToggle = !edgeToggle;
+			break;
+		case 't':
+			tripleToggle = !tripleToggle;
+			break;
+		case 'b':
+			bgFillToggle = !bgFillToggle;
+			break;
+		case 'm':
+			mirrorToggle = !mirrorToggle;
+			break;
+		}
+	}
+
 }

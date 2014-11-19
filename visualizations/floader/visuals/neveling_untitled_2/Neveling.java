@@ -41,12 +41,12 @@ public class Neveling extends AbstractVisual {
 		
 		rows = 4;
 		cols = 10;
+		g.noFill();
 		
 		g.translate(-sqSize * cols/2, -sqSize * rows/2);
 		
 		g.stroke(curColorScheme.getColor(0).getRGB());
 		g.strokeWeight(strokeWeight);
-		g.fill(0);
 
 		for (int r = 0; r < rows; r++) {
 			// for every column...

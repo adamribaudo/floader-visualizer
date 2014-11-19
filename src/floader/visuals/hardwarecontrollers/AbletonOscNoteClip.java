@@ -89,6 +89,8 @@ public class AbletonOscNoteClip {
 			return VisualConstants.GLOBAL_SCENE_DENSITY;
 		case 107:
 			return VisualConstants.GLOBAL_SCENE_BATTISTA;
+		case 108:
+			return VisualConstants.GLOBAL_SCENE_SHAPEDANCE;
 		default:
 			System.err
 					.println("Error: unidentified ctrl num in AbletonOscNoteClip conversion: "

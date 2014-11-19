@@ -3,7 +3,6 @@ package floader.visuals;
 import codeanticode.glgraphics.GLGraphicsOffScreen;
 import floader.looksgood.ani.Ani;
 import floader.visuals.alba_francesca_battista.Battista;
-import floader.visuals.clay_shirky_density_variant.Density;
 import floader.visuals.colorschemes.BlackAndWhite;
 import floader.visuals.colorschemes.BlueSunset;
 import floader.visuals.colorschemes.ColorScheme;
@@ -26,6 +25,7 @@ import floader.visuals.rectanglearmy.RectangleArmyVisual;
 import floader.visuals.shapedance.ShapeDanceVisual;
 import floader.visuals.spincycle.SpinCycleVisual;
 import floader.visuals.turingfractal.TuringFractalVisual;
+import floader.visuals.winter.WinterVisual;
 import oscP5.OscMessage;
 import oscP5.OscP5;
 import processing.core.PApplet;
@@ -77,12 +77,15 @@ public class StartVisual extends PApplet {
 	float minCameraDistance = 200;
 	float curCameraDistance = minCameraDistance;
 
-	float lightFallOffAmt = 0;
 	float dimAmt = 0;
 
 	Ani perspectiveAni;
 	float perspective = 0;
 	float maxPerspective = .999f;
+	
+	Ani lightFallOffAni;
+	float lightFallOffAmt = 0;
+	float maxLightFallOffAmt = .95f;
 
 	public static final int OSC_PORT = 7400;
 
@@ -109,6 +112,13 @@ public class StartVisual extends PApplet {
 		perspectiveAni = new Ani(this, 0, "perspective", maxPerspective);
 		perspectiveAni.setEasing(Ani.EXPO_OUT);
 		perspectiveAni.pause();
+		
+		// Light falloff Ani
+		lightFallOffAni = new Ani(this, .5f, "lightFallOffAmt", maxLightFallOffAmt);
+		lightFallOffAni.setEasing(Ani.EXPO_OUT);
+		lightFallOffAni.setPlayMode(Ani.YOYO);
+		lightFallOffAni.pause();
+		
 
 		// Offline drawing
 		offlineApp = new PApplet();
@@ -136,10 +146,10 @@ public class StartVisual extends PApplet {
 		// viz = new SpinCycleVisual(offlineApp);
 		// viz = new HangOnVisual(offlineApp);
 		// viz = new Neveling(offlineApp);
-		// viz = new Density(offlineApp);
-		// viz = new Battista(offlineApp);
+		// viz = new WinterVisual(offlineApp);
+		 viz = new Battista(offlineApp);
 		// viz =new PercentagesVisual(offlineApp);
-		viz = new ShapeDanceVisual(offlineApp);
+		// viz = new ShapeDanceVisual(offlineApp);
 
 		// todo
 		// viz = new FlyingObjectsVisual(this);
@@ -167,6 +177,7 @@ public class StartVisual extends PApplet {
 		applyMirror = false;
 		clipX = VisualConstants.WIDTH;
 		clipY = VisualConstants.HEIGHT;
+		applyTriple = false;
 	}
 
 	public void draw() {
@@ -368,7 +379,8 @@ public class StartVisual extends PApplet {
 	// TODO make keyboard just another hardware controller
 	public void keyPressed() {
 		if (VisualConstants.COMPUTERKEYBOARD_ENABLED) {
-			globalEffectChange(ComputerKeyboard.convertKeyPress(this.key), 1);
+			ComputerKeyboard.captureToggle(this.key);
+			globalEffectChange(ComputerKeyboard.convertKeyPress(this.key), ComputerKeyboard.convertKeyPressToValue(ComputerKeyboard.convertKeyPress(this.key)));
 		}
 	}
 
@@ -388,11 +400,15 @@ public class StartVisual extends PApplet {
 			int effect;
 			float amount = PApplet.map(vel, 0, 127, 0, 1);
 			if (VisualConstants.MONOMEMIDI_ENABLED) {
-				effect = MonomeMidi.convertNote(chan, note);
-				if (VisualConstants.isGlobalEffect(effect))
-					globalEffectChange(effect, amount);
-				else
-					vizEffectChange(effect, amount);
+				if (chan == MonomeMidi.NOTE_GLOBAL_KEYBOARD_CHANNEL) {
+					globalKeyboardEffect(chan, note, amount);
+				} else {
+					effect = MonomeMidi.convertNote(chan, note);
+					if (VisualConstants.isGlobalEffect(effect))
+						globalEffectChange(effect, amount);
+					else
+						vizEffectChange(effect, amount);
+				}
 			}
 		}
 	}
@@ -490,13 +506,20 @@ public class StartVisual extends PApplet {
 			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_TRIPLE:
-			if (amount > 0) {
-				applyTriple = !applyTriple;
+			if(amount > 0)
+			{
+			if (amount <= .5)
+				applyTriple = false;
+			else applyTriple = true;
 			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_EDGEDETECTION:
-			if (amount > 0)
-				applyEdges = !applyEdges;
+			if(amount > 0)
+			{
+			if (amount <= .5)
+				applyEdges = false;
+			else applyEdges= true;
+			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_CYCLECOLORSCHEME:
 			if (amount > 0) {
@@ -511,14 +534,21 @@ public class StartVisual extends PApplet {
 			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_MIRROR:
-			mirrorTriggered = true;
-			if (amount > 0)
-				applyMirror = !applyMirror;
+			if(amount > 0)
+			{
+			if (amount <= .5)
+				applyMirror = false;
+			else applyMirror = true;
+			}
 
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_TOGGLEBGFILL:
-			if (amount > 0)
-				applyBackground = !applyBackground;
+			if(amount > 0)
+			{
+			if (amount <= .5)
+				applyBackground = false;
+			else applyBackground = true;
+			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_RECTANGLES:
 			if (amount > 0) {
@@ -606,6 +636,20 @@ public class StartVisual extends PApplet {
 			break;
 		}
 	}
+	
+	void globalKeyboardEffect(int chan, int note, float amount)
+	{
+		// Light falloff Ani
+		lightFallOffAmt = 0;
+				lightFallOffAni = new Ani(this, 2f, "lightFallOffAmt", maxLightFallOffAmt);
+				lightFallOffAni.setEasing(Ani.EXPO_OUT);
+				
+		
+		lightFallOffAni.setEnd(maxLightFallOffAmt);
+		lightFallOffAni.setPlayMode(Ani.BACKWARD);
+		//lightFallOffAni.repeat(2);
+		//lightFallOffAni.start();
+	}
 
 	void oscEvent(OscMessage msg) {
 		int effect = -1;
@@ -680,7 +724,7 @@ public class StartVisual extends PApplet {
 			viz.setup();
 			break;
 		case VisualConstants.GLOBAL_SCENE_DENSITY:
-			viz = new Density(offlineApp);
+			viz = new WinterVisual(offlineApp);
 			viz.setColorScheme(colorSchemes[curColorSchemeIndex]);
 			viz.setup();
 			break;

@@ -52,7 +52,7 @@ public class ShapeDanceVisual extends AbstractVisual {
 
 	public void draw(PGraphics g) {
 		this.g = g;
-		g.background(0);
+		//g.background(0);
 		g.rectMode(PApplet.CENTER);
 		g.noStroke();
 

@@ -13,12 +13,12 @@ public class Battista extends AbstractVisual {
 	int i = 0;
 	int j = 0;
 	
-	int strokeWeight = 4;
+	int strokeWeight = 3;
 	int maxStrokeWeight = 8;
 	int offset = 50;
 	float A;
 	float G;
-	float scale = .5f;
+	float scale = 3.3f;
 	boolean animate = true;
 	int height;
 
@@ -28,17 +28,15 @@ public class Battista extends AbstractVisual {
 
 	public void setup() {
 		height = VisualConstants.HEIGHT;
+		
 	}
 
 	public void draw(PGraphics g) {
-		//g.translate((int)(-VisualConstants.WIDTH/3), (int)(-VisualConstants.HEIGHT/1.3));
-		height = (int)this.frustrumHeight;
-		//larghezza = (int)this.frustrumWidth;
 		
-		g.smooth();
+		height = (int)this.frustrumHeight;
+		
 		g.stroke(curColorScheme.getColor(0).getRGB());
 		g.strokeWeight(strokeWeight);
-		
 
 		if (!animate) {
 			y = 50;
@@ -94,11 +92,9 @@ public void ctrlEvent(int index, float val) {
 		{
 		case VisualConstants.LOCAL_EFFECT_1:
 			//movement amount
-			scale = val * 40;
+			scale = val * 30;
 			break;
 		case VisualConstants.LOCAL_EFFECT_2:
-			//movement amount
-			strokeWeight = (int)(val * maxStrokeWeight) + 1;
 			break;
 			
 		case VisualConstants.LOCAL_EFFECT_3:

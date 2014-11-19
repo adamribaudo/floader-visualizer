@@ -28,8 +28,9 @@ public class MonomeMidi  {
 		private static final int PAGE_3_SLDR_6 = 59;
 		private static final int PAGE_3_SLDR_7 = 60;
 		//Melodizer notes
-		private static final int NOTE_GLOBAL_MIDI_CHANNEL = 0;
-		private static final int NOTE_LOCAL_MIDI_CHANNEL = 1;
+		public static final int NOTE_GLOBAL_MIDI_CHANNEL = 0;
+		public static final int NOTE_LOCAL_MIDI_CHANNEL = 1;
+		public static final int NOTE_GLOBAL_KEYBOARD_CHANNEL = 2;
 		private static final int PAGE_1_ROW_1_NOTE_1 = 84;
 		private static final int PAGE_1_ROW_1_NOTE_2 = 85;
 		private static final int PAGE_1_ROW_1_NOTE_3 = 86;
@@ -53,8 +54,8 @@ public class MonomeMidi  {
 			{
 				switch(note)
 				{
-/*				case PAGE_1_ROW_1_NOTE_1:
-					return index = VisualConstants.GLOBAL_TRIGGER_RESET;*/
+				case PAGE_1_ROW_1_NOTE_1:
+					return index = VisualConstants.GLOBAL_TRIGGER_RESET;
 				case PAGE_1_ROW_1_NOTE_2:
 					return index = VisualConstants.GLOBAL_TRIGGER_CAPTUREBG;
 				case PAGE_1_ROW_1_NOTE_3:
@@ -82,7 +83,12 @@ public class MonomeMidi  {
 				case PAGE_1_ROW_2_NOTE_7:
 					return index = VisualConstants.LOCAL_EFFECT_7;
 				}
+			}else if(chan == NOTE_GLOBAL_KEYBOARD_CHANNEL)
+			{
+				return note;
 			}
+			
+			
 			System.err.println("Unrecognized input to MonomeMidi class, convertNote. Chan: " + chan + ", Note: " + note);
 			return index;
 		}

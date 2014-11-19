@@ -42,6 +42,7 @@ public class NanoKontrol2Midi  {
 		
 		public static int convertInputToIndex(int chan, int num)
 		{
+			
 			int  index = -1;
 			switch (num) {
 			case KNOB_1_CTRL_NUM:
