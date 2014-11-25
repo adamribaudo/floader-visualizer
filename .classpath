@@ -8,15 +8,15 @@
 	<classpathentry kind="lib" path="lib/Ani_floader_namespace.jar" sourcepath="/Ani/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/toxiclibscore.jar"/>
-	<classpathentry kind="lib" path="C:/processing-2.0.1/core/library/core.jar"/>
-	<classpathentry kind="lib" path="C:/processing-2.0.1/core/library/gluegen-rt.jar"/>
-	<classpathentry kind="lib" path="C:/processing-2.0.1/core/library/jogl-all.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Owner/Documents/Processing/libraries/peasycam/library/peasycam.jar" sourcepath="C:/Users/Owner/Documents/Processing/libraries/peasycam/src"/>
-	<classpathentry kind="lib" path="C:/Users/Owner/Documents/Processing/libraries/hemesh/library/hemesh.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Owner/Documents/Processing/libraries/hemesh/library/javolution-5.5.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Owner/Documents/Processing/libraries/themidibus/library/themidibus.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Owner/Documents/Processing/libraries/proscene/library/proscene.jar" sourcepath="C:/Users/Owner/Documents/Processing/libraries/proscene/src"/>
-	<classpathentry kind="lib" path="C:/Users/Owner/Documents/Processing/libraries/GLGraphics/library/GLGraphics.jar" sourcepath="C:/Users/Owner/Documents/Processing/libraries/GLGraphics/src"/>
-	<classpathentry kind="lib" path="C:/Users/Owner/Documents/Processing/libraries/SimpleOpenNI/library/SimpleOpenNI.jar"/>
+	<classpathentry kind="lib" path="lib/core.jar"/>
+	<classpathentry kind="lib" path="lib/GLGraphics.jar"/>
+	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="lib/hemesh.jar"/>
+	<classpathentry kind="lib" path="lib/javolution-5.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/jogl-all.jar"/>
+	<classpathentry kind="lib" path="lib/peasycam.jar"/>
+	<classpathentry kind="lib" path="lib/proscene.jar"/>
+	<classpathentry kind="lib" path="lib/SimpleOpenNI.jar"/>
+	<classpathentry kind="lib" path="lib/themidibus.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
