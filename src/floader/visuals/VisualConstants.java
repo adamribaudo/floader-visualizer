@@ -12,7 +12,6 @@ public final class VisualConstants {
 	public static final boolean NANOKONTROL2MIDI_ENABLED = false;
 
 	public static final boolean ABLETON_OSC_NOTE_ENABLED = true;
-	public static final int ABLETON_OSC_NOTE_CHANNEL = 0;
 	
 	public static final boolean ABLETON_OSC_CTRL_ENABLED = true;
 	public static final int ABLETON_OSC_CTRL_CHANNEL = 1;

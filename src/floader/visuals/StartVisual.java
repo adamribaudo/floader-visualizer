@@ -12,7 +12,7 @@ import floader.visuals.colorschemes.Terminal;
 import floader.visuals.flyingobjects.*;
 import floader.visuals.hangon.HangOnVisual;
 import floader.visuals.hardwarecontrollers.AbletonOscCtrlClip;
-import floader.visuals.hardwarecontrollers.AbletonOscNoteClip;
+import floader.visuals.hardwarecontrollers.AbletonOscNote;
 import floader.visuals.hardwarecontrollers.ComputerKeyboard;
 import floader.visuals.hardwarecontrollers.MonomeMidi;
 import floader.visuals.hardwarecontrollers.NanoKontrol2Midi;
@@ -671,12 +671,19 @@ public class StartVisual extends PApplet {
 			effect = AbletonOscCtrlClip.convertInputToIndex(msg);
 			value = PApplet.map(msg.get(VisualConstants.OSC_VALUE_INDEX)
 					.intValue(), 0, 127, 0, 1);
-		} else if (msg.checkAddrPattern("/mtn/note")
-				&& msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == VisualConstants.ABLETON_OSC_NOTE_CHANNEL) {
-			effect = AbletonOscNoteClip.convertInputToIndex(msg);
-			// TODO not sure why the VEL index is different for notes
-			value = PApplet.map(msg.get(VisualConstants.OSC_VEL_INDEX)
-					.intValue(), 0, 127, 0, 1);
+		} else if (msg.checkAddrPattern("/mtn/note"))
+				{
+					if(msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == AbletonOscNote.CLIP_CHANNEL) {
+						effect = AbletonOscNote.convertInputToIndex(msg);
+						// TODO not sure why the VEL index is different for notes
+						value = PApplet.map(msg.get(VisualConstants.OSC_VEL_INDEX)
+								.intValue(), 0, 127, 0, 1);
+					} else if(msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == AbletonOscNote.KEYBOARD_CHANNEL)
+					{
+						globalKeyboardEffect(0, 0, 0);
+					} else{
+						System.err.println("Unrecognized OSC channel in StartVisual -> oscEvent ");
+					}
 		}
 
 		if (effect != -1) {

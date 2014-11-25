@@ -3,7 +3,11 @@ package floader.visuals.hardwarecontrollers;
 import floader.visuals.VisualConstants;
 import oscP5.*;
 
-public class AbletonOscNoteClip {
+public class AbletonOscNote {
+	
+	public static final int CLIP_CHANNEL = 0;
+	public static final int KEYBOARD_CHANNEL = 3;
+	
 	public static int convertInputToIndex(OscMessage msg) {
 		if (!msg.checkAddrPattern("/mtn/note"))
 			return -1;
