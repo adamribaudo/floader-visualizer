@@ -55,6 +55,9 @@ public class AbletonOscCtrlClip  {
 			case 17:
 				index = VisualConstants.GLOBAL_EFFECT_ROTATEX;
 				break;
+			case 18:
+				index = VisualConstants.GLOBAL_EFFECT_LIGHTFALLOFF;
+				break;
 			default:
 				System.err.println("Error: unidentified ctrl num in AbletonOscCtrlClip conversion: " + ctrlNum);
 				break;

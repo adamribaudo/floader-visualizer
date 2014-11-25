@@ -29,8 +29,8 @@ public final class VisualConstants {
 	public static final int OSC_VALUE_INDEX = 0;
 	public static final int OSC_CHANNEL_INDEX = 2;
 	
-	public static final int WIDTH = 1900;
-	public static final int HEIGHT = 600;
+	public static final int WIDTH = 1600;
+	public static final int HEIGHT = 800;
 	public static final boolean FULLSCREEN = false;
 	
 	//Global Effects

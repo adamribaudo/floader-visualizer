@@ -207,10 +207,7 @@ public class StartVisual extends PApplet {
 		viz.frustrumHeight = frustrumHeight * 85.47008547008547f;
 		viz.frustrumWidth = viz.frustrumHeight * scene.camera().aspectRatio();
 
-		// Set background image
-		if (bgImage != null)
-			image(bgImage, 0, 0);
-
+		
 		// TODO figure out how to use clipping to handle mirror effect
 		/*
 		 * // offline buffer if(applyMirror){ offlineApp.setBounds(0, 0,
@@ -219,7 +216,14 @@ public class StartVisual extends PApplet {
 		 * offlineApp.setBounds(0, 0, VisualConstants.WIDTH,
 		 * VisualConstants.HEIGHT); offlineApp.noClip(); }
 		 */
+		
+		// Set global background image
+				if (bgImage != null)
+					image(bgImage, 0, 0);
 
+		//Set viz background image
+		
+				
 		offlineApp.g.beginDraw();
 
 		offlineApp.g.lightFalloff(1 - lightFallOffAmt, 0, 0);
@@ -303,6 +307,7 @@ public class StartVisual extends PApplet {
 			else
 				bgImage = this.g.get(0, 0, VisualConstants.WIDTH,
 						VisualConstants.HEIGHT);
+			
 			applyBgCapture = false;
 		}
 	}

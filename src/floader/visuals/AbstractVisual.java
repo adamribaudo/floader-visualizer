@@ -12,6 +12,7 @@ import floader.visuals.colorschemes.Terminal;
 import peasy.CameraState;
 import peasy.PeasyCam;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 public class AbstractVisual  implements IVisual {
 	protected String camStatePath;
@@ -20,10 +21,11 @@ public class AbstractVisual  implements IVisual {
 	protected ColorScheme curColorScheme;
 	public float frustrumHeight;
 	public float frustrumWidth;
+	public PImage bgImage;
 	
 	@Override
 	public void setup(){
-
+		
 	}
 	
 	@Override
