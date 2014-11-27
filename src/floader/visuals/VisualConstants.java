@@ -28,8 +28,8 @@ public final class VisualConstants {
 	public static final int OSC_VALUE_INDEX = 0;
 	public static final int OSC_CHANNEL_INDEX = 2;
 	
-	public static final int WIDTH = 1600;
-	public static final int HEIGHT = 800;
+	public static final int WIDTH = 1800;
+	public static final int HEIGHT = 600;
 	public static final boolean FULLSCREEN = false;
 	
 	//Global Effects
@@ -44,6 +44,8 @@ public final class VisualConstants {
 	public static final int GLOBAL_EFFECT_CLIPY = 19;
 	public static final int GLOBAL_EFFECT_LIGHTFALLOFF = 22;
 	public static final int GLOBAL_EFFECT_LIGHTDIM = 23;
+	
+	
 	
 	//Global Triggers
 	public static final int GLOBAL_TRIGGER_CUBE = 7;

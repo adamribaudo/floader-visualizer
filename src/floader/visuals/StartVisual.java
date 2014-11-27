@@ -82,7 +82,7 @@ public class StartVisual extends PApplet {
 	Ani perspectiveAni;
 	float perspective = 0;
 	float maxPerspective = .999f;
-	
+
 	Ani lightFallOffAni;
 	float lightFallOffAmt = 0;
 	float maxLightFallOffAmt = .95f;
@@ -112,13 +112,13 @@ public class StartVisual extends PApplet {
 		perspectiveAni = new Ani(this, 0, "perspective", maxPerspective);
 		perspectiveAni.setEasing(Ani.EXPO_OUT);
 		perspectiveAni.pause();
-		
+
 		// Light falloff Ani
-		lightFallOffAni = new Ani(this, .5f, "lightFallOffAmt", maxLightFallOffAmt);
+		lightFallOffAni = new Ani(this, .5f, "lightFallOffAmt",
+				maxLightFallOffAmt);
 		lightFallOffAni.setEasing(Ani.EXPO_OUT);
 		lightFallOffAni.setPlayMode(Ani.YOYO);
 		lightFallOffAni.pause();
-		
 
 		// Offline drawing
 		offlineApp = new PApplet();
@@ -147,7 +147,7 @@ public class StartVisual extends PApplet {
 		// viz = new HangOnVisual(offlineApp);
 		// viz = new Neveling(offlineApp);
 		// viz = new WinterVisual(offlineApp);
-		 viz = new Battista(offlineApp);
+		viz = new Battista(offlineApp);
 		// viz =new PercentagesVisual(offlineApp);
 		// viz = new ShapeDanceVisual(offlineApp);
 
@@ -207,7 +207,6 @@ public class StartVisual extends PApplet {
 		viz.frustrumHeight = frustrumHeight * 85.47008547008547f;
 		viz.frustrumWidth = viz.frustrumHeight * scene.camera().aspectRatio();
 
-		
 		// TODO figure out how to use clipping to handle mirror effect
 		/*
 		 * // offline buffer if(applyMirror){ offlineApp.setBounds(0, 0,
@@ -216,14 +215,13 @@ public class StartVisual extends PApplet {
 		 * offlineApp.setBounds(0, 0, VisualConstants.WIDTH,
 		 * VisualConstants.HEIGHT); offlineApp.noClip(); }
 		 */
-		
-		// Set global background image
-				if (bgImage != null)
-					image(bgImage, 0, 0);
 
-		//Set viz background image
-		
-				
+		// Set global background image
+		if (bgImage != null)
+			image(bgImage, 0, 0);
+
+		// Set viz background image
+
 		offlineApp.g.beginDraw();
 
 		offlineApp.g.lightFalloff(1 - lightFallOffAmt, 0, 0);
@@ -307,7 +305,7 @@ public class StartVisual extends PApplet {
 			else
 				bgImage = this.g.get(0, 0, VisualConstants.WIDTH,
 						VisualConstants.HEIGHT);
-			
+
 			applyBgCapture = false;
 		}
 	}
@@ -385,7 +383,9 @@ public class StartVisual extends PApplet {
 	public void keyPressed() {
 		if (VisualConstants.COMPUTERKEYBOARD_ENABLED) {
 			ComputerKeyboard.captureToggle(this.key);
-			globalEffectChange(ComputerKeyboard.convertKeyPress(this.key), ComputerKeyboard.convertKeyPressToValue(ComputerKeyboard.convertKeyPress(this.key)));
+			globalEffectChange(ComputerKeyboard.convertKeyPress(this.key),
+					ComputerKeyboard.convertKeyPressToValue(ComputerKeyboard
+							.convertKeyPress(this.key)));
 		}
 	}
 
@@ -511,19 +511,19 @@ public class StartVisual extends PApplet {
 			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_TRIPLE:
-			if(amount > 0)
-			{
-			if (amount <= .5)
-				applyTriple = false;
-			else applyTriple = true;
+			if (amount > 0) {
+				if (amount <= .5)
+					applyTriple = false;
+				else
+					applyTriple = true;
 			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_EDGEDETECTION:
-			if(amount > 0)
-			{
-			if (amount <= .5)
-				applyEdges = false;
-			else applyEdges= true;
+			if (amount > 0) {
+				if (amount <= .5)
+					applyEdges = false;
+				else
+					applyEdges = true;
 			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_CYCLECOLORSCHEME:
@@ -539,20 +539,20 @@ public class StartVisual extends PApplet {
 			}
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_MIRROR:
-			if(amount > 0)
-			{
-			if (amount <= .5)
-				applyMirror = false;
-			else applyMirror = true;
+			if (amount > 0) {
+				if (amount <= .5)
+					applyMirror = false;
+				else
+					applyMirror = true;
 			}
 
 			break;
 		case VisualConstants.GLOBAL_TRIGGER_TOGGLEBGFILL:
-			if(amount > 0)
-			{
-			if (amount <= .5)
-				applyBackground = false;
-			else applyBackground = true;
+			if (amount > 0) {
+				if (amount <= .5)
+					applyBackground = false;
+				else
+					applyBackground = true;
 			}
 			break;
 		case VisualConstants.GLOBAL_SCENE_RECTANGLES:
@@ -641,19 +641,20 @@ public class StartVisual extends PApplet {
 			break;
 		}
 	}
-	
-	void globalKeyboardEffect(int chan, int note, float amount)
-	{
-		// Light falloff Ani
-		lightFallOffAmt = 0;
-				lightFallOffAni = new Ani(this, 2f, "lightFallOffAmt", maxLightFallOffAmt);
-				lightFallOffAni.setEasing(Ani.EXPO_OUT);
-				
-		
-		lightFallOffAni.setEnd(maxLightFallOffAmt);
-		lightFallOffAni.setPlayMode(Ani.BACKWARD);
-		//lightFallOffAni.repeat(2);
-		//lightFallOffAni.start();
+
+	void globalKeyboardEffect(int chan, int note, float amount) {
+		if (amount > 0) {
+			// Light falloff Ani
+			lightFallOffAmt = 0;
+			lightFallOffAni = new Ani(this, 2f, "lightFallOffAmt",
+					maxLightFallOffAmt);
+			lightFallOffAni.setEasing(Ani.EXPO_OUT);
+
+			lightFallOffAni.setEnd(maxLightFallOffAmt);
+			lightFallOffAni.setPlayMode(Ani.BACKWARD);
+			// lightFallOffAni.repeat(2);
+			// lightFallOffAni.start();
+		}
 	}
 
 	void oscEvent(OscMessage msg) {
@@ -671,19 +672,21 @@ public class StartVisual extends PApplet {
 			effect = AbletonOscCtrlClip.convertInputToIndex(msg);
 			value = PApplet.map(msg.get(VisualConstants.OSC_VALUE_INDEX)
 					.intValue(), 0, 127, 0, 1);
-		} else if (msg.checkAddrPattern("/mtn/note"))
-				{
-					if(msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == AbletonOscNote.CLIP_CHANNEL) {
-						effect = AbletonOscNote.convertInputToIndex(msg);
-						// TODO not sure why the VEL index is different for notes
-						value = PApplet.map(msg.get(VisualConstants.OSC_VEL_INDEX)
-								.intValue(), 0, 127, 0, 1);
-					} else if(msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == AbletonOscNote.KEYBOARD_CHANNEL)
-					{
-						globalKeyboardEffect(0, 0, 0);
-					} else{
-						System.err.println("Unrecognized OSC channel in StartVisual -> oscEvent ");
-					}
+		} else if (msg.checkAddrPattern("/mtn/note")) {
+			if (msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == AbletonOscNote.CLIP_CHANNEL) {
+				effect = AbletonOscNote.convertInputToIndex(msg);
+				// TODO not sure why the VEL index is different for notes
+				value = PApplet.map(msg.get(VisualConstants.OSC_VEL_INDEX)
+						.intValue(), 0, 127, 0, 1);
+			} else if (msg.get(VisualConstants.OSC_CHANNEL_INDEX).intValue() == AbletonOscNote.KEYBOARD_CHANNEL) {
+				value = PApplet.map(msg.get(VisualConstants.OSC_VEL_INDEX)
+						.intValue(), 0, 127, 0, 1);
+				globalKeyboardEffect(0, 0, value);
+				effect = -2; // Effect isn't relevant here
+			} else {
+				System.err
+						.println("Unrecognized OSC channel in StartVisual -> oscEvent ");
+			}
 		}
 
 		if (effect != -1) {
