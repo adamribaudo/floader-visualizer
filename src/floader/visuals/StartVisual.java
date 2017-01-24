@@ -639,6 +639,26 @@ public class StartVisual extends PApplet {
 		case VisualConstants.GLOBAL_EFFECT_LIGHTDIM:
 			dimAmt = amount;
 			break;
+		case VisualConstants.GLOBAL_EFFECT_COLOR_0:
+			viz.setColorScheme(colorSchemes[0]);
+			this.curColorSchemeIndex = 0;
+			break;
+		case VisualConstants.GLOBAL_EFFECT_COLOR_1:
+			viz.setColorScheme(colorSchemes[1]);
+			this.curColorSchemeIndex = 1;
+			break;
+		case VisualConstants.GLOBAL_EFFECT_COLOR_2:
+			viz.setColorScheme(colorSchemes[2]);
+			this.curColorSchemeIndex = 2;
+			break;
+		case VisualConstants.GLOBAL_EFFECT_COLOR_3:
+			viz.setColorScheme(colorSchemes[3]);
+			this.curColorSchemeIndex = 3;
+			break;
+		case VisualConstants.GLOBAL_EFFECT_COLOR_4:
+			viz.setColorScheme(colorSchemes[4]);
+			this.curColorSchemeIndex = 4;
+			break;
 		}
 	}
 

@@ -45,6 +45,16 @@ public class ComputerKeyboard {
 			return VisualConstants.GLOBAL_SCENE_BATTISTA;
 		case '9':
 			return VisualConstants.GLOBAL_SCENE_SHAPEDANCE;
+		case '!':
+			return VisualConstants.GLOBAL_EFFECT_COLOR_0;
+		case '@':
+			return VisualConstants.GLOBAL_EFFECT_COLOR_1;
+		case '#':
+			return VisualConstants.GLOBAL_EFFECT_COLOR_2;
+		case '$':
+			return VisualConstants.GLOBAL_EFFECT_COLOR_3;
+		case '%':
+			return VisualConstants.GLOBAL_EFFECT_COLOR_4;
 			// Escape key
 		case 27:
 			return -1;

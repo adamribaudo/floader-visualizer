@@ -19,7 +19,7 @@ public final class VisualConstants {
 	public static final boolean ABLETON_OSC_NANOKONTROL_ENABLED = true;
 	public static final int ABLETON_OSC_NANOKONTROL_CHANNEL = 2;
 	
-	public static final boolean MONOMEMIDI_ENABLED = true;
+	public static final boolean MONOMEMIDI_ENABLED = false;
 	public static final boolean COMPUTERKEYBOARD_ENABLED = true;
 	
 	public static final int OSC_CTRL_INDEX = 1;
@@ -28,8 +28,8 @@ public final class VisualConstants {
 	public static final int OSC_VALUE_INDEX = 0;
 	public static final int OSC_CHANNEL_INDEX = 2;
 	
-	public static final int WIDTH = 1800;
-	public static final int HEIGHT = 600;
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
 	public static final boolean FULLSCREEN = false;
 	
 	//Global Effects
@@ -45,7 +45,12 @@ public final class VisualConstants {
 	public static final int GLOBAL_EFFECT_LIGHTFALLOFF = 22;
 	public static final int GLOBAL_EFFECT_LIGHTDIM = 23;
 	
-	
+	//Global Colors
+	public static final int GLOBAL_EFFECT_COLOR_0 = 29;
+	public static final int GLOBAL_EFFECT_COLOR_1 = 30;
+	public static final int GLOBAL_EFFECT_COLOR_2 = 31;
+	public static final int GLOBAL_EFFECT_COLOR_3 = 32;
+	public static final int GLOBAL_EFFECT_COLOR_4 = 33;
 	
 	//Global Triggers
 	public static final int GLOBAL_TRIGGER_CUBE = 7;
@@ -68,6 +73,7 @@ public final class VisualConstants {
 	public static final int GLOBAL_SCENE_DENSITY = 25;
 	public static final int GLOBAL_SCENE_BATTISTA = 26;
 	public static final int GLOBAL_SCENE_SHAPEDANCE = 28;
+	
 	//Local Effects
 	public static final int LOCAL_EFFECT_1 = 100;
 	public static final int LOCAL_EFFECT_2 = 101;

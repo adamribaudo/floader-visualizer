@@ -77,6 +77,21 @@ public class AbletonOscNote {
 		case 19:
 			index = VisualConstants.GLOBAL_TRIGGER_TRIPLE;
 			break;
+		case 20:
+			index = VisualConstants.GLOBAL_EFFECT_COLOR_0;
+			break;
+		case 21:
+			index = VisualConstants.GLOBAL_EFFECT_COLOR_1;
+			break;
+		case 22:
+			index = VisualConstants.GLOBAL_EFFECT_COLOR_2;
+			break;
+		case 23:
+			index = VisualConstants.GLOBAL_EFFECT_COLOR_3;
+			break;
+		case 24:
+			index = VisualConstants.GLOBAL_EFFECT_COLOR_4;
+			break;
 		case 100:
 			return VisualConstants.GLOBAL_SCENE_RECTANGLES;
 		case 101:
